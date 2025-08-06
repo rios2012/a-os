@@ -273,6 +273,7 @@
       offCtx.beginPath();
       const x = width / 2;
       const y = height / 2;
+      const size = Math.min(width, height) / 32; // El corazón se escala según la pantalla
 
       for (let t = 0; t <= Math.PI * 2; t += 0.01) {
         const hx = 16 * Math.pow(Math.sin(t), 3);
@@ -355,3 +356,4 @@
   </script>
 </body>
 </html>
+
