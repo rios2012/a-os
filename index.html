@@ -30,31 +30,33 @@
     }
     #heartText { 
       position: absolute; 
-      top: 52%;
+      top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
       font-family: "Arial", sans-serif;
-      font-size: 43px;
+      font-size: calc(3vw + 15px); /* Adaptativo */
       color: #ffffff;
       text-shadow: 0 0 15px #ff69b4, 0 0 30px #ff69b4;
       opacity: 0;
       transition: opacity 1s ease-in-out;
       z-index: 3;
       pointer-events: none;
+      text-align: center;
     }
     #heartSubText {
       position: absolute;
-      top: 60%;
+      top: 58%;
       left: 50%;
       transform: translate(-50%, -50%);
       font-family: "Arial", sans-serif;
-      font-size: 28px;
+      font-size: calc(2vw + 10px); /* Adaptativo */
       color: #fff;
       text-shadow: 0 0 10px #ff69b4;
       opacity: 0;
       transition: opacity 1s ease-in-out;
       z-index: 3;
       pointer-events: none;
+      text-align: center;
     }
     /* Mensaje cuando está en vertical */
     #rotate-message {
@@ -65,22 +67,48 @@
       background: black;
       color: white;
       font-family: Arial, sans-serif;
-      font-size: 5vw;
+      font-size: 4vw;
       text-align: center;
       justify-content: center;
       align-items: center;
+      flex-direction: column;
       z-index: 9999;
       padding: 20px;
       box-sizing: border-box;
     }
+    /* Animación del icono de teléfono */
+    .phone-icon {
+      width: 80px;
+      height: 140px;
+      border: 5px solid white;
+      border-radius: 15px;
+      margin-bottom: 20px;
+      animation: rotatePhone 1.5s infinite alternate ease-in-out;
+    }
+    .phone-screen {
+      width: 60px;
+      height: 100px;
+      background: white;
+      margin: 10px auto;
+      border-radius: 5px;
+    }
+    @keyframes rotatePhone {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(90deg); }
+    }
   </style>
 </head>
 <body>
-  <div id="rotate-message">📱 Gira tu dispositivo a horizontal para ver la animación 🎉</div>
+  <div id="rotate-message">
+    <div class="phone-icon">
+      <div class="phone-screen"></div>
+    </div>
+    📱 Gira tu dispositivo a horizontal para ver la animación 🎉
+  </div>
 
   <canvas id="matrix-canvas"></canvas>
   <canvas id="particle-canvas"></canvas>
-  <div id="heartText">Feliz Cumpleaños </div>
+  <div id="heartText">Feliz Cumpleaños</div>
   <div id="heartSubText">🎁💖🥳🎂</div>
 
   <script>
@@ -159,6 +187,8 @@
 
     function textToParticles(text) {
       heartText.style.opacity = 0;
+      heartSubText.style.opacity = 0;
+
       const width = particleCanvas.width;
       const height = particleCanvas.height;
 
@@ -168,7 +198,7 @@
       offscreenCanvas.height = height;
 
       offCtx.fillStyle = "white";
-      offCtx.font = "100px Arial";
+      offCtx.font = `${Math.floor(width * 0.1)}px Arial`;
       offCtx.textAlign = "center";
       offCtx.textBaseline = "middle";
       offCtx.fillText(text, width / 2, height / 2);
@@ -231,17 +261,18 @@
       const width = particleCanvas.width;
       const height = particleCanvas.height;
 
+      const size = Math.min(width, height) / 20; // tamaño adaptativo
+
       const offscreenCanvas = document.createElement("canvas");
       const offCtx = offscreenCanvas.getContext("2d");
       offscreenCanvas.width = width;
       offscreenCanvas.height = height;
 
       offCtx.strokeStyle = "white";
-      offCtx.lineWidth = 10;
+      offCtx.lineWidth = 8;
       offCtx.beginPath();
       const x = width / 2;
       const y = height / 2;
-      const size = 16;
 
       for (let t = 0; t <= Math.PI * 2; t += 0.01) {
         const hx = 16 * Math.pow(Math.sin(t), 3);
