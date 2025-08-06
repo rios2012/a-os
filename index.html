@@ -44,7 +44,7 @@
     }
     #heartSubText {
   position: absolute;
-  top: 58%; /* Ajusta este valor para separarlo del texto principal */
+  top: 60%; /* Ajusta este valor para separarlo del texto principal */
   left: 50%;
   transform: translate(-50%, -50%);
   font-family: "Arial", sans-serif;
@@ -126,9 +126,9 @@ const heartSubText = document.getElementById("heartSubText");
         ctx.globalAlpha = this.alpha;
         if (glow) {
           ctx.shadowBlur = 20;
-          ctx.shadowColor = rgba(${this.color},1);
+          ctx.shadowColor = `rgba(${this.color},1)`;
         }
-        ctx.fillStyle = rgba(${this.color},${this.alpha});
+        ctx.fillStyle = `rgba(${this.color},${this.alpha})`;
         ctx.beginPath();
         ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
         ctx.fill();
@@ -168,7 +168,7 @@ const heartSubText = document.getElementById("heartSubText");
       }
 
       while (particles.length < targetPoints.length) {
-        const color = 0,255,255;
+        const color = `0,255,255`;
         const p = new Particle(Math.random() * width, Math.random() * height, color);
         particles.push(p);
       }
@@ -176,7 +176,7 @@ const heartSubText = document.getElementById("heartSubText");
       for (let i = 0; i < targetPoints.length; i++) {
         particles[i].alpha = 1;
         particles[i].moveTo(targetPoints[i].x, targetPoints[i].y);
-        particles[i].color = 0,255,255;
+        particles[i].color = `0,255,255`;
       }
 
       for (let i = targetPoints.length; i < particles.length; i++) {
@@ -255,7 +255,7 @@ const heartSubText = document.getElementById("heartSubText");
   }
 
   while (particles.length < targetPoints.length) {
-    const color = 255,0,0;
+    const color = `255,0,0`;
     const p = new Particle(Math.random() * width, Math.random() * height, color);
     particles.push(p);
   }
@@ -263,7 +263,7 @@ const heartSubText = document.getElementById("heartSubText");
   for (let i = 0; i < targetPoints.length; i++) {
     particles[i].alpha = 1;
     particles[i].moveTo(targetPoints[i].x, targetPoints[i].y);
-    particles[i].color = 255,0,0;
+    particles[i].color = `255,0,0`;
   }
 
   for (let i = targetPoints.length; i < particles.length; i++) {
@@ -304,6 +304,14 @@ const heartSubText = document.getElementById("heartSubText");
     window.onload = () => {
       sequence();
     };
+
+// Ajustar tamaño de los canvas y reubicar textos al cambiar tamaño/rotación
+window.addEventListener("resize", () => {
+  matrixCanvas.width = particleCanvas.width = window.innerWidth;
+  matrixCanvas.height = particleCanvas.height = window.innerHeight;
+  // Opcional: puedes volver a dibujar el fondo o reiniciar animaciones si lo necesitas
+});
   </script>
 </body>
 </html>
+
